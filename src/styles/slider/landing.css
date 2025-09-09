@@ -1,0 +1,58 @@
+.swiper-pagination-bullet {
+    color:white;
+    background: white;
+    width: 50px;
+    border-radius: 0;
+    height: 3px;
+}
+
+.swiper-pagination-bullet {
+    transition: opacity 1s ease;
+}
+
+.landing-button {
+    letter-spacing: 1px;
+    border: 1.5px solid white!important;
+    color: white!important;
+    display: inline-block;
+    line-height: 100%;
+    position: relative;
+    text-decoration: none;
+    z-index: 0;
+    -webkit-transition: border-color .35s ease, background .35s ease;
+    transition: border-color .35s ease, background .35s ease;
+}
+
+.landing-button:before {
+    background-color: white;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    -webkit-transition: all .35s ease;
+    transition: all .35s ease;
+}
+
+.landing-button:hover:before {
+    top: 0;
+}
+
+.landing-button:hover{
+    color:black!important;
+    transition:0.5s;
+    box-shadow: 0 0 50px 0 rgba(255,255,255,.2);
+}
+
+.landing-button:after {
+    position: absolute;
+    right: 2.34375rem;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(50%);
+    -ms-transform: translateY(-50%) translateX(50%);
+    transform: translateY(-50%) translateX(50%);
+    font-size: 1.75em;
+}

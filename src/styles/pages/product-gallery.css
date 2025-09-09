@@ -1,0 +1,17 @@
+.thumbsSwiper .swiper-slide {
+    opacity: 0.6;
+    transition: .2s opacity;
+    cursor: pointer;
+}
+
+.thumbsSwiper .swiper-slide-thumb-active {
+    opacity: 1;
+}
+
+.swiper-button-prev {
+    display:none;
+}
+
+.swiper-button-next {
+    display:none;
+}

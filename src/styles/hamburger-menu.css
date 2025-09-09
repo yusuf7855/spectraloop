@@ -1,0 +1,46 @@
+label {
+    cursor: pointer;
+}
+
+input[type=checkbox] + label {
+    .icon-bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background-color: black;
+        margin: 4px;
+        transition: all 0.4s ease;
+    }
+    .icon-bar:nth-child(2) {
+        width: 17px;
+    }
+    .icon-bar:nth-child(3) {
+        width: 12px;
+    }
+    .top-bar {
+        transform: rotate(0);
+    }
+    .middle-bar {
+        opacity: 1;
+    }
+}
+
+input[type=checkbox]:checked + label {
+    .top-bar {
+        transform: rotate(45deg);
+        transform-origin: 10% 10%;
+    }
+    .icon-bar:nth-child(2) {
+        width: 22px;
+    }
+    .icon-bar:nth-child(3) {
+        width: 22px;
+    }
+    .middle-bar {
+        opacity: 0;
+    }
+    .bottom-bar {
+        transform: rotate(-45deg);
+        transform-origin: 10% 90%;
+    }
+}

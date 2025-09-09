@@ -1,0 +1,58 @@
+.outlined-button-colored {
+    letter-spacing: 1px;
+    border: 2px solid #edb472 !important; /* Ana renk sınır */
+    color: white !important;
+    line-height: 100%;
+    position: relative;
+    text-decoration: none;
+    z-index: 0;
+    -webkit-transition: border-color .35s ease, background .35s ease;
+    transition: border-color .35s ease, background .35s ease;
+    overflow: hidden;
+}
+
+.outlined-button-colored:before {
+    background-color: #edb472; /* Ana renk arka plan */
+    content: "";
+    display: block;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    -webkit-transition: all .35s ease;
+    transition: all .35s ease;
+}
+
+.outlined-button-colored:after {
+    position: absolute;
+    right: 2.34375rem;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(50%);
+    -ms-transform: translateY(-50%) translateX(50%);
+    transform: translateY(-50%) translateX(50%);
+    font-size: 1.75em;
+}
+
+.outlined-button-colored:hover:before {
+    top: 0;
+}
+
+.outlined-button-colored:hover {
+    color: white !important;
+    transition: 0.5s;
+    box-shadow: 0 0 50px 0 rgba(199, 122, 99, .2); /* Ana rengin şeffaf hali */
+    border-color: #D4967D !important; /* Açık ton sınır (hover) */
+    background-color: #D4967D; /* Açık ton arka plan (hover) */
+}
+
+.outlined-button-colored.hover:before {
+    top: 0;
+}
+
+.outlined-button-colored.hover {
+    color: white !important;
+    transition: 0.5s;
+    box-shadow: 0 0 50px 0 rgba(199, 122, 99, .2); /* Ana rengin şeffaf hali */
+}
