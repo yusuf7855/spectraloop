@@ -3,11 +3,12 @@ import HomePage from "./pages/home/HomePage.jsx";
 import Layout from "./components/layout/Layout.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import ContactPage from "./pages/contact/ContactPage.jsx";
-import CorporatePage from "./pages/corporate/CorporatePage.jsx";
 import ServicePage from "./pages/service/ServicePage.jsx";
 import ServicesPage from "./pages/services/ServicesPage.jsx";
 import BlogPage from "./pages/blog/BlogPage.jsx";
 import BlogPostPage from "./pages/blog/BlogPostPage.jsx";
+import TeamApplicationPage from "./pages/corporate/CorporatePage.jsx";
+import AdminPanelPage from "./pages/admin/AdminPanelPage.jsx";
 
 function App() {
     return (
@@ -15,11 +16,12 @@ function App() {
             <Route element={<Layout/>}>
                 <Route path="/" element={<HomePage/>}/>
                 <Route path="/iletisim" element={<ContactPage/>}/>
-                <Route path="/kurumsal" element={<CorporatePage/>}/>
+                <Route path="/basvuru" element={<TeamApplicationPage/>}/>
                 <Route path="/odalar" element={<ServicesPage/>}/>
                 <Route path="/odalar/:serviceRoute" element={<ServicePage/>}/>
                 <Route path="/blog" element={<BlogPage/>}/>
                 <Route path="/blog/:slug" element={<BlogPostPage/>}/>
+                <Route path="/admin" element={<AdminPanelPage/>}/>
             </Route>
             <Route path="*" element={<Layout freeLayout={true}><NotFoundPage/></Layout>}/>
         </Routes>

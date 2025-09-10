@@ -43,7 +43,7 @@ function ContactUs() {
     }
 
     const handlePhoneClick = () => {
-        window.open("tel:+905396385955", "_self");
+        window.open("tel:+905417722697", "_self");
     };
 
     const handleEmailClick = () => {
@@ -76,7 +76,7 @@ function ContactUs() {
                         </Box>
                         <Box>
                             <Box sx={{fontSize: "14px", fontWeight: 600}}>
-                                +90 539 638 59 55
+                                +90 541 772 26 97
                             </Box>
                             <Box sx={{fontSize: "12px", opacity: 0.7, mt: 0.2}}>
                                 Rezervasyon Hattı

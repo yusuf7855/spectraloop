@@ -186,7 +186,7 @@ function ServicePageDescription({item}) {
                     }}
                     onClick={() => {
                         // Telefon numarasını arayabilir veya rezervasyon formunu açabilir
-                        window.open("tel:+905396385955", "_self");
+                        window.open("tel:+905417722697", "_self");
                     }}
                 >
                     {item.availability ? "Rezervasyon Yap" : "Bu Oda Şu Anda Dolu"}
@@ -199,7 +199,7 @@ function ServicePageDescription({item}) {
                         color: "rgba(0,0,0,0.6)",
                         mt: 1
                     }}>
-                        Rezervasyon için bizi arayın: +90 539 638 59 55
+                        Rezervasyon için bizi arayın: +90 541 772 26 97
                     </Typography>
                 )}
             </Box>

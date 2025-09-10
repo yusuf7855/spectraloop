@@ -3,12 +3,28 @@ import {Box, Grid, Typography} from "@mui/material";
 import RevealInViewAnimation from "../../../animations/RevealInViewAnimation.jsx";
 import {Image} from "../../../components/common/Image.jsx";
 import {motion, useAnimation, useInView} from "framer-motion";
-import React from "react";
+import React, {useState} from "react";
+import StyledLightbox from "../../../components/common/StyledLightbox.jsx";
+import t3 from "../../../assets/images/t3.jpg";
+import bakan from "../../../assets/images/bakan.jpg";
+import rute from "../../../assets/images/rute.jpg";
+import pod2 from "../../../assets/images/pod2.jpg";
+import erciyas from "../../../assets/images/erciyas.jpg";
+import ahmethoca from "../../../assets/images/ahmethoca.jpg";
+import kontrol from "../../../assets/images/kontrol.jpg";
+import poster from "../../../assets/images/poster.jpg";
+import spec3 from "../../../assets/images/spec3.jpg";
+import spec1 from "../../../assets/images/spec1.jpg";
+import hangar from "../../../assets/images/hangar.jpg";
 
 function GallerySection({servicesRef}) {
     const ref = React.useRef(null)
     const isInView = useInView(ref, {once: true})
     const mainControls = useAnimation()
+
+    // Lightbox state
+    const [fullSizePictureOpen, setFullSizePictureOpen] = useState(false)
+    const [startIndex, setStartIndex] = useState(0)
 
     React.useEffect(() => {
         if (isInView) mainControls.start("visible")
@@ -18,41 +34,81 @@ function GallerySection({servicesRef}) {
     const galleryImages = [
         {
             id: 1,
-            src: "/src/assets/images/spec1.jpg",
-            title: "Hyperloop Pod Prototipi",
-            category: "Prototip"
+            src: t3,
+            title: "T3 Vakfı Yönetim Kurulu Başkanı. Elvan KUZUCU HIDIR",
+            category: "2025"
         },
         {
             id: 2,
-            src: "/src/assets/images/spec1.jpg",
-            title: "Mekanik Sistem Tasarımı",
-            category: "Tasarım"
+            src: bakan,
+            title: "Türkiye Sanayi ve Teknoloji Bakanı Mehmet Fatih Kacır",
+            category: "2025"
         },
         {
             id: 3,
-            src: "/src/assets/images/spec1.jpg",
-            title: "Takım Çalışması",
-            category: "Ekip"
+            src: rute,
+            title: "TÜBİTAK RUTE Müdürü Dr. Tolgahan Kaya",
+            category: "2025"
         },
         {
             id: 4,
-            src: "/src/assets/images/spec1.jpg",
-            title: "Test Süreci",
-            category: "Test"
+            src: pod2,
+            title: "Yarışma Tüneli",
+            category: "2025"
         },
         {
-            id: 5,
-            src: "/src/assets/images/spec1.jpg",
-            title: "Teknofest Yarışması",
-            category: "Yarışma"
+            id:5,
+            src: erciyas,
+            title: "Erciyas Hyperloop Genel Müdür Yardımcısı Sayın Mehmet Örgen",
+            category: "2025"
         },
         {
             id: 6,
-            src: "/src/assets/images/spec1.jpg",
-            title: "Ödül Töreni",
-            category: "Başarı"
-        }
+            src: ahmethoca,
+            title: "Değerli Hocamız.",
+            category: "2025"
+        },
+        {
+            id: 7,
+            src: kontrol,
+            title: "Teknik Kontroller",
+            category: "2025"
+        },
+        {
+            id: 8,
+            src: poster,
+            title: "İnavasyon Sunum ve Posteri",
+            category: "2025"
+        },
+        {
+            id: 9,
+            src: spec3,
+            title: "Yarışma Alanı",
+            category: "2025"
+        },
+        {
+            id: 10,
+            src: spec1,
+            title: "Takım Fotoğrafı",
+            category: "2025"
+        },
+        {
+            id: 11,
+            src: hangar,
+            title: "Geleceği Raydan Çıkarıyoruz",
+            category: "2025"
+        },
+
     ];
+
+    // Lightbox için sadece resim URL'lerini içeren array
+    const imageList = galleryImages.map(image => image.src);
+
+    // Resme tıklama fonksiyonu
+    const handleImageClick = (index) => {
+        setStartIndex(index);
+        setFullSizePictureOpen(true);
+    };
 
     const getImageHeight = (index) => {
         const heights = [300, 300, 300, 300, 300, 300];
@@ -155,24 +211,27 @@ function GallerySection({servicesRef}) {
                                         ease: [0.25, 0.46, 0.45, 0.94]
                                     }}
                                 >
-                                    <Box sx={{
-                                        position: "relative",
-                                        borderRadius: 4,
-                                        overflow: "hidden",
-                                        boxShadow: "0 10px 40px rgba(0,84,171,0.1)",
-                                        transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                                        cursor: "pointer",
-                                        ":hover": {
-                                            transform: "translateY(-12px) scale(1.02)",
-                                            boxShadow: "0 25px 60px rgba(0,84,171,0.2)",
-                                            ".gallery-image": {
-                                                transform: "scale(1.1)"
-                                            },
-                                            ".overlay": {
-                                                opacity: 1
+                                    <Box
+                                        onClick={() => handleImageClick(index)}
+                                        sx={{
+                                            position: "relative",
+                                            borderRadius: 4,
+                                            overflow: "hidden",
+                                            boxShadow: "0 10px 40px rgba(0,84,171,0.1)",
+                                            transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                                            cursor: "pointer",
+                                            ":hover": {
+                                                transform: "translateY(-12px) scale(1.02)",
+                                                boxShadow: "0 25px 60px rgba(0,84,171,0.2)",
+                                                ".gallery-image": {
+                                                    transform: "scale(1.1)"
+                                                },
+                                                ".overlay": {
+                                                    opacity: 1
+                                                }
                                             }
-                                        }
-                                    }}>
+                                        }}
+                                    >
                                         {/* Category Badge */}
                                         <Box sx={{
                                             position: "absolute",
@@ -237,6 +296,14 @@ function GallerySection({servicesRef}) {
                                                 }}>
                                                     {image.title}
                                                 </Typography>
+                                                <Typography sx={{
+                                                    fontSize: "14px",
+                                                    fontWeight: 400,
+                                                    opacity: 0.9,
+                                                    mb: 2
+                                                }}>
+                                                    Büyütmek için tıklayın
+                                                </Typography>
                                                 <Box sx={{
                                                     width: "40px",
                                                     height: "2px",
@@ -265,72 +332,17 @@ function GallerySection({servicesRef}) {
                 </Box>
 
                 {/* Bottom Stats Section */}
-                <RevealInViewAnimation blur={true} size={20} transition={{duration: 0.6, delay: 2.5}}>
-                    <Box sx={{
-                        mt: 10,
-                        textAlign: "center",
-                        p: 4,
-                        backgroundColor: "rgba(0,84,171,0.03)",
-                        borderRadius: 3,
-                        border: "1px solid rgba(0,84,171,0.1)"
-                    }}>
-                        <Grid container spacing={4} justifyContent="center">
-                            <Grid item xs={6} md={3}>
-                                <Typography sx={{
-                                    fontSize: {xs: "24px", md: "32px"},
-                                    fontWeight: 800,
-                                    color: "#0054ab",
-                                    mb: 1
-                                }}>50+</Typography>
-                                <Typography sx={{
-                                    fontSize: "14px",
-                                    color: "rgba(0,0,0,.7)",
-                                    fontWeight: 500
-                                }}>Proje Fotoğrafı</Typography>
-                            </Grid>
-                            <Grid item xs={6} md={3}>
-                                <Typography sx={{
-                                    fontSize: {xs: "24px", md: "32px"},
-                                    fontWeight: 800,
-                                    color: "#0054ab",
-                                    mb: 1
-                                }}>3</Typography>
-                                <Typography sx={{
-                                    fontSize: "14px",
-                                    color: "rgba(0,0,0,.7)",
-                                    fontWeight: 500
-                                }}>Yıl Deneyim</Typography>
-                            </Grid>
-                            <Grid item xs={6} md={3}>
-                                <Typography sx={{
-                                    fontSize: {xs: "24px", md: "32px"},
-                                    fontWeight: 800,
-                                    color: "#0054ab",
-                                    mb: 1
-                                }}>15+</Typography>
-                                <Typography sx={{
-                                    fontSize: "14px",
-                                    color: "rgba(0,0,0,.7)",
-                                    fontWeight: 500
-                                }}>Takım Üyesi</Typography>
-                            </Grid>
-                            <Grid item xs={6} md={3}>
-                                <Typography sx={{
-                                    fontSize: {xs: "24px", md: "32px"},
-                                    fontWeight: 800,
-                                    color: "#0054ab",
-                                    mb: 1
-                                }}>3</Typography>
-                                <Typography sx={{
-                                    fontSize: "14px",
-                                    color: "rgba(0,0,0,.7)",
-                                    fontWeight: 500
-                                }}>Ödül</Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </RevealInViewAnimation>
+
             </StyledContainer>
+
+            {/* Lightbox Modal */}
+            <StyledLightbox
+                fullSizePictureOpen={fullSizePictureOpen}
+                setFullSizePictureOpen={setFullSizePictureOpen}
+                startIndex={startIndex}
+                setStartIndex={setStartIndex}
+                imageList={imageList}
+            />
         </Box>
     );
 }

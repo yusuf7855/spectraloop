@@ -9,7 +9,7 @@ import {useRef} from "react";
 import ContactMapSection from "../contact/components/ContactMapSection.jsx";
 
 function HomePage() {
-    document.title = "DE PERLAS HOTEL";
+    document.title = "Spectraloop";
     const servicesRef = useRef();
 
     return (
@@ -19,7 +19,7 @@ function HomePage() {
             <ContactMapSection/>
             <OurServices servicesRef={servicesRef}/>
             <WhyUs/>
-            <ContactUs/>
+
         </Box>
     );
 }

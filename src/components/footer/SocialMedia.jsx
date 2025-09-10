@@ -7,10 +7,10 @@ function SocialMedia({sx, iconSx}) {
     return (
         <Box sx={{display: "flex", flexDirection: "row", gap: 1.5, mt: 3}}>
             <StyledDarkIconButton sx={sx} aria-label="instagram-link" component={Link} target="_blank"
-                                  to={"https://www.instagram.com/"}><Instagram
+                                  to={"https://www.instagram.com/spectraloop/"}><Instagram
                 sx={{fontSize: "24px", ...iconSx}}/></StyledDarkIconButton>
             <StyledDarkIconButton sx={sx} aria-label="linkedin-link" component={Link} target="_blank"
-                                  to={"https://tr.linkedin.com"}><LinkedIn
+                                  to={"https://tr.linkedin.com/spectraloop"}><LinkedIn
                 sx={{fontSize: "24px", ...iconSx}}/></StyledDarkIconButton>
             <StyledDarkIconButton sx={sx} aria-label="twitter-link" component={Link} target="_blank" to={""}>
                 <X sx={{fontSize: "24px", ...iconSx}}/></StyledDarkIconButton>

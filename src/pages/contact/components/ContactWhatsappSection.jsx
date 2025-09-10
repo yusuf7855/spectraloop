@@ -80,7 +80,7 @@ function ContactWhatsappSection() {
                         </Typography>
                     </RevealInViewAnimation>
                     <RevealInViewAnimation blur={true} size={20} transition={{duration: 0.6, delay: .9}}>
-                        <Box component={"a"} rel={"noreferrer"} target={"_blank"} href={"https://wa.me/905396385955"}>
+                        <Box component={"a"} rel={"noreferrer"} target={"_blank"} href={"https://wa.me/905417722697"}>
                             <Button sx={{
                                 boxShadow: "0px 0px 50px 10px rgba(0,0,0,0.1)",
                                 borderRadius: "400px",

@@ -33,8 +33,8 @@ function WhatsAppFloatingButton() {
     const theme = useTheme();
 
     // WhatsApp telefon numarası - projedeki mevcut numara
-    const phoneNumber = "905396385955";
-    const message = "Merhaba! De Perlas Hotel hakkında bilgi almak istiyorum.";
+    const phoneNumber = "905417722697";
+    const message = "Merhaba!.";
 
     // Scroll event listener - butonu her zaman göster
     useEffect(() => {

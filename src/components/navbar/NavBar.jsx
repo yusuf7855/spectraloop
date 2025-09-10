@@ -63,7 +63,7 @@ function NavBar({handleSidebar, logo, sidebarOpen, isTransparent, navItems, logo
                         href={navItems[0].route}
                         isTransparent={isTransparent}>{navItems[0].sidebarTitle}</StyledSimpleBarItem>
                     <NavigationMenu tabs={tabs} scrolled={scrolled} isTransparent={isTransparent}/>
-                    {navItems.slice(2, navItems.length).map((item, index) => <StyledSimpleBarItem
+                    {navItems.slice(1, navItems.length).map((item, index) => <StyledSimpleBarItem
                         key={index}
                         scrolled={scrolled}
                         href={item.route}
@@ -101,14 +101,14 @@ function NavBar({handleSidebar, logo, sidebarOpen, isTransparent, navItems, logo
                                 backgroundColor: "#003d7a", // Koyu ton
                             }
                         }}
-                        href="https://wa.me/905396385955"
+                        href="https://wa.me/905417722697"
                         target="_blank"
                         rel="noreferrer"
                     >
                         <Typography sx={{ fontWeight: 300, textTransform: "none", color: "#fff" }}>
                             <Stack direction="row" alignItems="center" spacing={1}>
                                 <WhatsAppIcon sx={{ color: "#fff" }} />
-                                +90 (539) 638 59 55
+                                +90 (541) 772 26 97
                             </Stack>
                         </Typography>
                     </StyledWhatsAppButton>

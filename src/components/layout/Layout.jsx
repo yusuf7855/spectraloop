@@ -116,18 +116,12 @@ export default function Layout({children, freeLayout}) {
             icon: <Home sx={iconStyle}/>,
             route: "/",
         },
+
         {
-            title: "PROJELERİMİZ",
-            sidebarTitle: "Projelerimiz",
-            icon: <Engineering sx={iconStyle}/>,
-            component: ServicesMenu,
-            items: services
-        },
-        {
-            title: "TAKIMIZ",
-            sidebarTitle: "Takımız",
+            title: "TAKIM BAŞVURUSU",
+            sidebarTitle: "Takım Başvurusu",
             icon: <Apartment sx={iconStyle}/>,
-            route: "/kurumsal",
+            route: "/basvuru",
         },
         {
             title: "BLOG",
@@ -173,7 +167,6 @@ export default function Layout({children, freeLayout}) {
                         </Box>
                         <Footer/>
                         <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} onOpen={toggleSidebar(true)} navItems={navItems}/>
-                        {/* WhatsApp Floating Button - tüm sayfalarda görünecek */}
                         <WhatsAppFloatingButton />
                     </Box> : <Box>{children}</Box>
             }

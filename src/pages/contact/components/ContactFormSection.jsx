@@ -67,7 +67,7 @@ function ContactFormSection() {
                             }}>
                                 BİZE ULAŞIN
                             </Typography>
-                            <ContactUs/>
+
                         </Box>
                         <SocialMedia disableYoutube={true}/>
                     </Box>
