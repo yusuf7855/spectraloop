@@ -26,7 +26,7 @@ function ServicePage() {
         );
     }
 
-    document.title = `${service.title} - Perlas Otel`
+    document.title = `${service.title} - Spectraloop`
 
     return (
         <Box>

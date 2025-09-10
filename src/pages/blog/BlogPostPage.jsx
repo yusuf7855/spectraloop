@@ -1,414 +1,515 @@
-import React from 'react';
-import { Box, Typography, Chip, Breadcrumbs, Button, Grid, Card, CardContent } from "@mui/material";
-import { StyledContainer } from "../../components/styled/StyledComponents.jsx";
-import { Link, useParams } from "react-router-dom";
-import RevealInViewAnimation from "../../animations/RevealInViewAnimation.jsx";
-import { ArrowBack, AccessTime, Category } from "@mui/icons-material";
+import React, { useState, useEffect } from 'react';
+import {
+    Box,
+    Typography,
+    Container,
+    Chip,
+    Button,
+    CircularProgress,
+    Breadcrumbs,
+    Avatar,
+    Divider,
+    IconButton,
+    Grid,
+    Card,
+    CardContent,
+    CardMedia
+} from '@mui/material';
+import {
+    ArrowBack,
+    AccessTime,
+    CalendarToday,
+    Share,
+    Engineering,
+    Speed,
+    Science,
+    EmojiEvents
+} from '@mui/icons-material';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { StyledContainer } from '../../components/styled/StyledComponents.jsx';
+import RevealInViewAnimation from '../../animations/RevealInViewAnimation.jsx';
 
-// Blog yazıları verisi (BlogPage.jsx ile aynı)
-const blogPosts = [
-    {
-        id: 1,
-        title: "Samsun'un En Güzel Gezilecek Yerleri",
-        excerpt: "Samsun'da mutlaka görmeniz gereken tarihi ve doğal güzellikleri keşfedin. Amisos Tepesi'nden Ladik Gölü'ne kadar...",
-        content: `Samsun, Karadeniz'in incisi olarak bilinen ve hem tarihi hem de doğal güzellikleriyle ziyaretçilerini büyüleyen bir şehirdir. 
+// Blog API Service
+class BlogApiService {
+    static baseURL = 'https://backendspectraloop.com.tr/api';
 
-**Amisos Tepesi ve Arkeoloji Müzesi**
+    static async getBlogBySlug(slug) {
+        try {
+            const response = await fetch(`${this.baseURL}/blogs/${slug}`);
+            const data = await response.json();
 
-Şehrin en önemli simgelerinden biri olan Amisos Tepesi, antik dönemden kalma izleri barındırır. Tepenin zirvesinde yer alan Arkeoloji Müzesi, bölgenin zengin tarihini gözler önüne serer. Müzede sergilenen eserler arasında antik dönemden kalma sikkeler, seramikler ve günlük yaşam eşyaları bulunmaktadır.
+            if (!response.ok) {
+                throw new Error(data.message || 'Blog not found');
+            }
 
-**Bandırma Vapuru Müzesi**
-
-Mustafa Kemal Atatürk'ün 19 Mayıs 1919'da Samsun'a geldiği tarihi gemi olan Bandırma Vapuru, artık bir müze olarak hizmet vermektedir. Vapur içerisinde o dönemki yaşam koşulları ve Kurtuluş Savaşı'nın başlangıcına dair önemli belgeler sergilenmektedir.
-
-**Atakum Sahili**
-
-Kilometrelerce uzanan kumsalı ve modern tesisleriyle Atakum, hem yerel halk hem de turistlerin vazgeçilmez adresidir. Sahil boyunca uzanan yürüyüş yolları, bisiklet parkurları ve dinlenme alanları ile ideal bir rekreasyon bölgesidir.
-
-**Ladik Gölü**
-
-Samsun merkezine yaklaşık 100 km uzaklıkta bulunan Ladik Gölü, doğa severlerin favorisidir. Özellikle nilüfer çiçekleri açtığında büyüleyici bir manzara sunar. Göl çevresinde piknik alanları ve yürüyüş parkurları bulunmaktadır.
-
-**Amazon Köyü (Terme)**
-
-Efsanevi Amazon kadın savaşçılarının yaşadığı söylenen bu bölge, tarihi ve mitolojik açıdan büyük önem taşır. Terme ilçesinde bulunan bu alan, arkeolojik kazılarla gün yüzüne çıkarılan buluntularıyla ziyaretçileri büyüler.
-
-**Kızılırmak Delta Kuş Cenneti**
-
-Doğa fotoğrafçılığı meraklıları için ideal olan bu alan, birçok kuş türüne ev sahipliği yapar. Özellikle göç mevsimlerinde binlerce kuşun uğrak yeri olan delta, eşsiz doğa manzaraları sunar.`,
-        image: "/src/assets/images/blog/samsun-gezilecek-yerler.jpg",
-        category: "Gezilecek Yerler",
-        date: "15 Mart 2024",
-        readTime: "5 dk",
-        slug: "samsun-gezilecek-yerler"
-    },
-    {
-        id: 2,
-        title: "Samsun'un Tarihi: Antik Çağlardan Günümüze",
-        excerpt: "Binlerce yıllık geçmişe sahip Samsun'un tarihi yolculuğu. Amisos'tan günümüze kadar yaşanan önemli olaylar...",
-        content: `Samsun, tarihi M.Ö. 8. yüzyıla kadar uzanan köklü bir geçmişe sahiptir.
-
-**Antik Dönem - Amisos**
-
-Şehir, antik çağda Amisos adıyla biliniyordu. Grek kolonistler tarafından M.Ö. 8. yüzyılda kurulmuş olan bu antik kent, önemli bir ticaret merkeziydi. Karadeniz'in stratejik konumunda yer alan Amisos, dönemin en gelişmiş limanlarından biriydi.
-
-**Roma ve Bizans Dönemi**
-
-Roma İmparatorluğu döneminde Amisos, bölgenin en önemli limanlarından biri haline geldi. Pontus Krallığı'nın başkenti olan şehir, Romalılar tarafından ele geçirildikten sonra da önemini korudu. Bizans döneminde de stratejik önemini sürdüren şehir, İpek Yolu'nun önemli duraklarından biriydi.
-
-**Selçuklu ve Beylikler Dönemi**
-
-11. yüzyılda Türklerin Anadolu'ya gelişiyle birlikte Samsun da Türk egemenliğine girdi. Danişmendliler ve ardından İlhanlılar tarafından yönetilen şehir, bu dönemde de ticari önemini korudu.
-
-**Osmanlı Dönemi**
-
-Osmanlı İmparatorluğu döneminde Samsun, Karadeniz ticaretinin merkezi konumundaydı. Tütün ve tahıl ihracatında önemli rol oynadı. 19. yüzyılda Rus savaşları sırasında stratejik önem kazanan şehir, önemli bir liman kenti olarak gelişmeye devam etti.
-
-**Kurtuluş Savaşı ve Cumhuriyet**
-
-19 Mayıs 1919'da Mustafa Kemal Atatürk'ün Samsun'a çıkışı, Türk Kurtuluş Savaşı'nın başlangıcı olarak kabul edilir. Bu nedenle şehir, "Kurtuluş'un Başladığı Şehir" olarak anılır. Atatürk'ün burada başlattığı milli mücadele, Türkiye Cumhuriyeti'nin kurulmasına giden yolu açmıştır.
-
-**Modern Samsun**
-
-Cumhuriyet döneminde hızla gelişen Samsun, günümüzde Karadeniz'in en önemli şehirlerinden biri haline gelmiştir. Sanayi, ticaret ve turizm açısından önem taşıyan şehir, modern Türkiye'nin gelişiminde önemli rol oynamaktadır.`,
-        image: "/src/assets/images/blog/samsun-tarihi.jpg",
-        category: "Tarih",
-        date: "10 Mart 2024",
-        readTime: "8 dk",
-        slug: "samsun-tarihi"
-    },
-    {
-        id: 3,
-        title: "Samsun'da Nerede Kalınır? Konaklama Rehberi",
-        excerpt: "Samsun'da konaklama seçenekleri ve en iyi otel önerileri. Perlas Otel'in konforlu odalarından butik otellere...",
-        content: `Samsun'da konaklama konusunda birçok seçeneğiniz bulunmaktadır.
-
-**Atakum Bölgesi**
-
-Denize yakın konumu ve modern tesisleriyle Atakum, en popüler konaklama bölgesidir. Perlas Otel de bu bölgede yer almaktadır. Bölge, yürüyüş yolları, restoranlar ve cafeler ile canlı bir atmosfere sahiptir.
-
-**Şehir Merkezi**
-
-İş seyahatleri için ideal olan şehir merkezi, ulaşım açısından avantajlıdır. Banka, hastane ve resmi kurumlar bu bölgede yoğunlaşmıştır.
-
-**Sahil Şeridi**
-
-Deniz manzaralı odalar ve yürüyüş imkanları sunan sahil şeridindeki oteller, tatil için mükemmeldir. Gündoğumu ve günbatımı manzaralarını odanızdan izleyebilirsiniz.
-
-**Perlas Otel Avantajları**
-
-- Denize yürüme mesafesi (sadece 200 metre)
-- Modern ve konforlu odalar
-- 24 saat room service hizmeti
-- Ücretsiz Wi-Fi ve otopark imkanı
-- Profesyonel güvenlik hizmetleri
-- Şehir merkezine kolay ulaşım
-- Resepsiyon concierge desteği
-
-**Konaklama İpuçları**
-
-Samsun'da konaklama yaparken dikkat edilmesi gereken noktalar arasında rezervasyon öncesi otel konumu, ulaşım imkanları ve sunduğu hizmetlerin araştırılması yer alır. Özellikle yaz aylarında erken rezervasyon yapılması önerilir.`,
-        image: "/src/assets/images/blog/samsun-konaklama.jpg",
-        category: "Konaklama",
-        date: "5 Mart 2024",
-        readTime: "6 dk",
-        slug: "samsun-konaklama-rehberi"
-    },
-    {
-        id: 4,
-        title: "Samsun Mutfağı: Yöresel Lezzetler",
-        excerpt: "Karadeniz mutfağının önemli temsilcisi Samsun'un benzersiz yemekleri. Pideden Terme fasulyesine...",
-        content: `Samsun mutfağı, Karadeniz'in zengin lezzetlerini en iyi şekilde yansıtır.
-
-**Samsun Pidesi**
-
-Türkiye'nin en ünlü pidelerinden biri olan Samsun pidesi, ince hamuru ve özel tereyağıyla meşhurdur. Üzerine eklenen taze peynir, yumurta ve sucuk ile nefis bir lezzet ortaya çıkar.
-
-**Terme Fasulyesi**
-
-Terme ilçesinde yetiştirilen bu özel fasulye çeşidi, lezzeti ve kalitesiyle ünlüdür. Et suyu ile pişirilen Terme fasulyesi, Türkiye'nin en kaliteli kuru baklagilleri arasında yer alır.
-
-**Karadeniz Balıkları**
-
-Hamsi, palamut, kalkan gibi taze balıklar Samsun mutfağının vazgeçilmezleridir. Özellikle hamsi, çeşitli şekillerde pişirilerek sofralarda yer alır.
-
-**Mısır Ekmeği**
-
-Yöresel mısır unundan yapılan bu ekmek, özellikle balık yemekleriyle mükemmel uyum sağlar. Geleneksel taş fırınlarda pişirilen mısır ekmeği, Karadeniz sofralarının olmazsa olmazıdır.
-
-**Laz Böreği**
-
-Muhallebili ve çıtır hamurlu bu tatlı, Samsun'un en sevilen tatlılarından biridir. Kat kat açılan yufka arasına konulan muhallebi ile enfes bir tat ortaya çıkar.
-
-**Kaygana**
-
-Yumurta ve un ile yapılan bu basit ama lezzetli yemek, özellikle kahvaltılarda tercih edilir. Üzerine eklenen taze otlar ile daha da lezzetli hale gelir.`,
-        image: "/src/assets/images/blog/samsun-mutfagi.jpg",
-        category: "Gastronomi",
-        date: "1 Mart 2024",
-        readTime: "4 dk",
-        slug: "samsun-mutfagi"
+            return data;
+        } catch (error) {
+            console.error('Blog fetch error:', error);
+            throw error;
+        }
     }
-];
+
+    static async getBlogs() {
+        try {
+            const response = await fetch(`${this.baseURL}/blogs`);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to fetch blogs');
+            }
+
+            return data;
+        } catch (error) {
+            console.error('Blog fetch error:', error);
+            throw error;
+        }
+    }
+}
+
+// Fallback blog data in case API fails
+const fallbackBlogData = {
+    title: "Blog Yazısı Bulunamadı",
+    content: "Aradığınız blog yazısı bulunamadı. Lütfen blog sayfasına geri dönerek diğer yazıları inceleyin.",
+    excerpt: "Blog yazısı bulunamadı",
+    category: "Genel",
+    createdAt: new Date().toISOString(),
+    readTime: "1 dk",
+    imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=600&fit=crop"
+};
 
 function BlogPostPage() {
     const { slug } = useParams();
-    const post = blogPosts.find(p => p.slug === slug);
+    const navigate = useNavigate();
+    const [blog, setBlog] = useState(null);
+    const [relatedBlogs, setRelatedBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    if (!post) {
+    const getCategoryIcon = (category) => {
+        switch (category) {
+            case 'Teknoloji': return <Engineering sx={{ fontSize: 20, color: "#0054ab" }} />;
+            case 'Yarışma': return <EmojiEvents sx={{ fontSize: 20, color: "#0054ab" }} />;
+            case 'Takım': return <Science sx={{ fontSize: 20, color: "#0054ab" }} />;
+            case 'Gelecek': return <Speed sx={{ fontSize: 20, color: "#0054ab" }} />;
+            default: return <Engineering sx={{ fontSize: 20, color: "#0054ab" }} />;
+        }
+    };
+
+    const getImageUrl = (blog) => {
+        if (blog?.imageUrl) {
+            return blog.imageUrl;
+        }
+        if (blog?.image && !blog.image.startsWith('/src/')) {
+            return `https://backendspectraloop.com.tr/uploads/${blog.image}`;
+        }
+        return "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=600&fit=crop";
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('tr-TR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
+
+    useEffect(() => {
+        if (slug) {
+            loadBlog();
+            loadRelatedBlogs();
+        }
+    }, [slug]);
+
+    useEffect(() => {
+        if (blog) {
+            document.title = `${blog.title} - SpectraLoop Blog`;
+        }
+    }, [blog]);
+
+    const loadBlog = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const response = await BlogApiService.getBlogBySlug(slug);
+
+            if (response.success && response.data) {
+                setBlog(response.data);
+            } else {
+                // Blog not found, use fallback
+                setBlog({ ...fallbackBlogData, slug });
+            }
+        } catch (blogError) {
+            console.error('Failed to load blog:', blogError);
+            setError('Blog yazısı yüklenirken hata oluştu');
+            // Use fallback blog data
+            setBlog({ ...fallbackBlogData, slug });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const loadRelatedBlogs = async () => {
+        try {
+            const response = await BlogApiService.getBlogs();
+            if (response.success && response.data) {
+                // Filter out current blog and limit to 3 related blogs
+                const filtered = response.data
+                    .filter(b => b.slug !== slug)
+                    .slice(0, 3);
+                setRelatedBlogs(filtered);
+            }
+        } catch (relatedError) {
+            console.error('Failed to load related blogs:', relatedError);
+        }
+    };
+
+    const handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: blog.title,
+                text: blog.excerpt,
+                url: window.location.href,
+            });
+        } else {
+            // Fallback to copying URL to clipboard
+            navigator.clipboard.writeText(window.location.href);
+            alert('Blog linki panoya kopyalandı!');
+        }
+    };
+
+    if (loading) {
         return (
-            <StyledContainer sx={{ py: 8, textAlign: "center" }}>
-                <Typography variant="h4" sx={{ mb: 2 }}>Blog yazısı bulunamadı</Typography>
-                <Button component={Link} to="/blog" variant="contained">
-                    Blog'a Geri Dön
-                </Button>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
+                <CircularProgress size={60} sx={{ color: '#0054ab' }} />
+            </Box>
+        );
+    }
+
+    if (error && !blog) {
+        return (
+            <StyledContainer sx={{ py: 8 }}>
+                <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="h4" sx={{ mb: 2, color: 'error.main' }}>
+                        Hata Oluştu
+                    </Typography>
+                    <Typography sx={{ mb: 4 }}>
+                        {error}
+                    </Typography>
+                    <Button
+                        variant="contained"
+                        onClick={() => navigate('/blog')}
+                        sx={{ bgcolor: '#0054ab' }}
+                    >
+                        Blog Sayfasına Dön
+                    </Button>
+                </Box>
             </StyledContainer>
         );
     }
 
-    document.title = `${post.title} - Perlas Otel Blog`;
-
-    // Diğer blog yazıları (mevcut yazı hariç)
-    const otherPosts = blogPosts.filter(p => p.id !== post.id).slice(0, 3);
-
     return (
         <Box>
-            {/* Breadcrumbs */}
-            <StyledContainer sx={{ pt: 3, pb: 1 }}>
-                <Breadcrumbs separator=">" sx={{ mb: 2 }}>
-                    <Link to="/" style={{ textDecoration: "none", color: "#666" }}>
-                        Anasayfa
-                    </Link>
-                    <Link to="/blog" style={{ textDecoration: "none", color: "#666" }}>
-                        Blog
-                    </Link>
-                    <Typography color="text.primary">{post.title}</Typography>
-                </Breadcrumbs>
-            </StyledContainer>
-
-            {/* Hero Image */}
+            {/* Hero Section */}
             <Box sx={{
-                height: { xs: 300, md: 400 },
-                background: `linear-gradient(rgba(199,122,99,0.3), rgba(199,122,99,0.3)), url('https://via.placeholder.com/1200x400/edb472/ffffff?text=${encodeURIComponent(post.category)}')`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                textAlign: "center",
-                mb: 4
+                position: 'relative',
+                height: { xs: '60vh', md: '70vh' },
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'flex-end'
             }}>
-                <RevealInViewAnimation>
-                    <Box>
+                {/* Background Image */}
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundImage: `url(${getImageUrl(blog)})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        '&::after': {
+                            content: '""',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)'
+                        }
+                    }}
+                />
+
+                {/* Back Button */}
+                <IconButton
+                    onClick={() => navigate('/blog')}
+                    sx={{
+                        position: 'absolute',
+                        top: 20,
+                        left: 20,
+                        bgcolor: 'rgba(255,255,255,0.9)',
+                        color: '#0054ab',
+                        '&:hover': {
+                            bgcolor: 'white'
+                        }
+                    }}
+                >
+                    <ArrowBack />
+                </IconButton>
+
+                {/* Share Button */}
+                <IconButton
+                    onClick={handleShare}
+                    sx={{
+                        position: 'absolute',
+                        top: 20,
+                        right: 20,
+                        bgcolor: 'rgba(255,255,255,0.9)',
+                        color: '#0054ab',
+                        '&:hover': {
+                            bgcolor: 'white'
+                        }
+                    }}
+                >
+                    <Share />
+                </IconButton>
+
+                {/* Content */}
+                <StyledContainer sx={{ position: 'relative', zIndex: 2, pb: 6 }}>
+                    <RevealInViewAnimation>
+                        {/* Breadcrumbs */}
+                        <Breadcrumbs sx={{ mb: 3, color: 'white' }}>
+                            <Link to="/" style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none' }}>
+                                Ana Sayfa
+                            </Link>
+                            <Link to="/blog" style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none' }}>
+                                Blog
+                            </Link>
+                            <Typography sx={{ color: 'white' }}>
+                                {blog?.title}
+                            </Typography>
+                        </Breadcrumbs>
+
+                        {/* Category */}
                         <Chip
-                            label={post.category}
+                            icon={getCategoryIcon(blog?.category)}
+                            label={blog?.category}
                             sx={{
-                                bgcolor: "rgba(255,255,255,0.2)",
-                                color: "white",
-                                mb: 2,
-                                fontWeight: 500
+                                bgcolor: 'rgba(0,84,171,0.9)',
+                                color: 'white',
+                                fontWeight: 600,
+                                mb: 3,
+                                backdropFilter: 'blur(10px)'
                             }}
                         />
-                        <Typography variant="h2" sx={{
-                            fontSize: { xs: "1.8rem", md: "2.5rem" },
-                            fontWeight: 700,
-                            mb: 2,
-                            maxWidth: "800px",
-                            mx: "auto"
-                        }}>
-                            {post.title}
-                        </Typography>
-                        <Box sx={{ display: "flex", justifyContent: "center", gap: 3, flexWrap: "wrap" }}>
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                <AccessTime sx={{ fontSize: 18 }} />
-                                <Typography variant="body2">{post.readTime} okuma</Typography>
-                            </Box>
-                            <Typography variant="body2">{post.date}</Typography>
-                        </Box>
-                    </Box>
-                </RevealInViewAnimation>
-            </Box>
 
-            {/* Content */}
-            <StyledContainer sx={{ pb: 6 }}>
-                <Grid container spacing={4}>
-                    <Grid item xs={12} md={8}>
-                        {/* Back Button */}
-                        <Button
-                            component={Link}
-                            to="/blog"
-                            startIcon={<ArrowBack />}
+                        {/* Title */}
+                        <Typography
+                            variant="h1"
                             sx={{
+                                fontSize: { xs: '2rem', md: '3rem', lg: '3.5rem' },
+                                fontWeight: 800,
+                                color: 'white',
                                 mb: 3,
-                                color: "#edb472",
-                                textTransform: "none",
-                                "&:hover": {
-                                    bgcolor: "rgba(199,122,99,0.1)"
-                                }
+                                lineHeight: 1.2
                             }}
                         >
-                            Blog'a Geri Dön
-                        </Button>
+                            {blog?.title}
+                        </Typography>
 
-                        {/* Article Content */}
-                        <RevealInViewAnimation>
-                            <Box sx={{
-                                "& h1, & h2, & h3, & h4, & h5, & h6": {
-                                    color: "#333",
-                                    fontWeight: 600,
-                                    mt: 3,
-                                    mb: 2
-                                },
-                                "& p": {
-                                    lineHeight: 1.8,
-                                    mb: 2,
-                                    color: "#555"
-                                },
-                                "& strong": {
-                                    color: "#edb472",
-                                    fontWeight: 600,
-                                    display: "block",
-                                    fontSize: "1.1rem",
-                                    mt: 3,
-                                    mb: 1
-                                }
-                            }}>
-                                {post.content.split('\n\n').map((paragraph, index) => {
-                                    if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                                        return (
-                                            <Typography key={index} component="h3" sx={{
-                                                color: "#edb472",
-                                                fontWeight: 600,
-                                                fontSize: "1.3rem",
-                                                mt: 4,
-                                                mb: 2
-                                            }}>
-                                                {paragraph.slice(2, -2)}
-                                            </Typography>
-                                        );
-                                    }
-                                    return (
-                                        <Typography key={index} paragraph sx={{
-                                            lineHeight: 1.8,
-                                            color: "#555",
-                                            textAlign: "justify"
-                                        }}>
-                                            {paragraph}
-                                        </Typography>
-                                    );
-                                })}
+                        {/* Meta Information */}
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'center' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <CalendarToday sx={{ fontSize: 16, color: 'rgba(255,255,255,0.8)' }} />
+                                <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px' }}>
+                                    {formatDate(blog?.createdAt)}
+                                </Typography>
                             </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <AccessTime sx={{ fontSize: 16, color: 'rgba(255,255,255,0.8)' }} />
+                                <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: '14px' }}>
+                                    {blog?.readTime} okuma
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </RevealInViewAnimation>
+                </StyledContainer>
+            </Box>
+
+            {/* Article Content */}
+            <StyledContainer sx={{ py: { xs: 6, md: 8 } }}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12} md={8}>
+                        <RevealInViewAnimation>
+                            {/* Excerpt */}
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    fontSize: '1.2rem',
+                                    fontWeight: 400,
+                                    color: 'rgba(0,0,0,0.7)',
+                                    lineHeight: 1.6,
+                                    mb: 4,
+                                    fontStyle: 'italic',
+                                    borderLeft: '4px solid #0054ab',
+                                    pl: 3,
+                                    bgcolor: 'rgba(0,84,171,0.05)',
+                                    py: 2,
+                                    borderRadius: '0 8px 8px 0'
+                                }}
+                            >
+                                {blog?.excerpt}
+                            </Typography>
+
+                            <Divider sx={{ mb: 4 }} />
+
+                            {/* Main Content */}
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    fontSize: '1.1rem',
+                                    lineHeight: 1.8,
+                                    color: 'rgba(0,0,0,0.8)',
+                                    '& p': {
+                                        mb: 3
+                                    },
+                                    '& h2': {
+                                        fontSize: '1.8rem',
+                                        fontWeight: 700,
+                                        color: '#0054ab',
+                                        mt: 4,
+                                        mb: 2
+                                    },
+                                    '& h3': {
+                                        fontSize: '1.4rem',
+                                        fontWeight: 600,
+                                        color: '#333',
+                                        mt: 3,
+                                        mb: 2
+                                    }
+                                }}
+                                dangerouslySetInnerHTML={{
+                                    __html: blog?.content?.replace(/\n/g, '<br>') || ''
+                                }}
+                            />
                         </RevealInViewAnimation>
                     </Grid>
 
                     {/* Sidebar */}
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ position: "sticky", top: 100 }}>
-                            {/* Other Posts */}
-                            <RevealInViewAnimation delay={0.3}>
-                                <Typography variant="h5" sx={{
-                                    fontWeight: 600,
-                                    mb: 3,
-                                    color: "#333"
-                                }}>
-                                    Diğer Yazılar
-                                </Typography>
-                                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                                    {otherPosts.map((otherPost) => (
-                                        <Card key={otherPost.id} sx={{
-                                            boxShadow: "0px 2px 10px rgba(0,0,0,0.1)",
-                                            borderRadius: 2,
-                                            transition: "transform 0.2s ease",
-                                            "&:hover": {
-                                                transform: "translateY(-2px)"
-                                            }
-                                        }}>
-                                            <CardContent sx={{ p: 2 }}>
-                                                <Chip
-                                                    label={otherPost.category}
-                                                    size="small"
-                                                    sx={{
-                                                        bgcolor: "rgba(199,122,99,0.1)",
-                                                        color: "#edb472",
-                                                        mb: 1,
-                                                        fontSize: "0.75rem"
-                                                    }}
-                                                />
-                                                <Typography
-                                                    component={Link}
-                                                    to={`/blog/${otherPost.slug}`}
-                                                    variant="h6"
-                                                    sx={{
-                                                        fontSize: "1rem",
-                                                        fontWeight: 600,
-                                                        color: "#333",
-                                                        textDecoration: "none",
-                                                        display: "block",
-                                                        mb: 1,
-                                                        "&:hover": {
-                                                            color: "#edb472"
-                                                        }
-                                                    }}
-                                                >
-                                                    {otherPost.title}
-                                                </Typography>
-                                                <Typography variant="body2" sx={{
-                                                    color: "text.secondary",
-                                                    fontSize: "0.85rem"
-                                                }}>
-                                                    {otherPost.date} • {otherPost.readTime}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </Box>
-
-                                {/* Call to Action */}
-                                <Box sx={{
-                                    mt: 4,
-                                    p: 3,
-                                    bgcolor: "rgba(199,122,99,0.05)",
-                                    borderRadius: 2,
-                                    textAlign: "center",
-                                    border: "1px solid rgba(199,122,99,0.1)"
-                                }}>
-                                    <Typography variant="h6" sx={{
-                                        fontWeight: 600,
-                                        mb: 2,
-                                        color: "#edb472"
-                                    }}>
-                                        Samsun'da Konaklama
-                                    </Typography>
-                                    <Typography variant="body2" sx={{
-                                        mb: 3,
-                                        color: "#666",
-                                        lineHeight: 1.6
-                                    }}>
-                                        Perlas Otel'de konforlu bir konaklama deneyimi yaşayın.
-                                        Denize yürüme mesafesinde, modern odalarımızla hizmetinizdeyiz.
-                                    </Typography>
-                                    <Button
-                                        component={Link}
-                                        to="/odalar"
-                                        variant="contained"
+                        <Box sx={{ position: 'sticky', top: 20 }}>
+                            {/* Author Info */}
+                            <Card sx={{ mb: 4, borderRadius: 3 }}>
+                                <CardContent sx={{ textAlign: 'center', p: 3 }}>
+                                    <Avatar
                                         sx={{
-                                            bgcolor: "#edb472",
-                                            textTransform: "none",
-                                            fontWeight: 500,
-                                            "&:hover": {
-                                                bgcolor: "#B66952"
-                                            }
+                                            width: 80,
+                                            height: 80,
+                                            mx: 'auto',
+                                            mb: 2,
+                                            bgcolor: '#0054ab'
                                         }}
                                     >
-                                        Odalarımızı İnceleyin
-                                    </Button>
-                                </Box>
-                            </RevealInViewAnimation>
+                                        SL
+                                    </Avatar>
+                                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                                        SpectraLoop Takımı
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                                        Samsun Üniversitesi Hyperloop Takımı
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ fontSize: '14px', lineHeight: 1.5 }}>
+                                        Geleceğin ulaşım teknolojisi Hyperloop üzerine araştırma ve geliştirme yapan öğrenci takımı.
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                            {/* Related Articles */}
+                            {relatedBlogs.length > 0 && (
+                                <Card sx={{ borderRadius: 3 }}>
+                                    <CardContent sx={{ p: 3 }}>
+                                        <Typography variant="h6" sx={{ fontWeight: 600, mb: 3 }}>
+                                            İlgili Yazılar
+                                        </Typography>
+                                        {relatedBlogs.map((relatedBlog) => (
+                                            <Box key={relatedBlog._id} sx={{ mb: 3, '&:last-child': { mb: 0 } }}>
+                                                <Link
+                                                    to={`/blog/${relatedBlog.slug}`}
+                                                    style={{ textDecoration: 'none' }}
+                                                >
+                                                    <Box sx={{ display: 'flex', gap: 2, '&:hover img': { transform: 'scale(1.05)' } }}>
+                                                        <img
+                                                            src={getImageUrl(relatedBlog)}
+                                                            alt={relatedBlog.title}
+                                                            style={{
+                                                                width: '80px',
+                                                                height: '60px',
+                                                                objectFit: 'cover',
+                                                                borderRadius: '8px',
+                                                                transition: 'transform 0.3s ease'
+                                                            }}
+                                                        />
+                                                        <Box sx={{ flex: 1 }}>
+                                                            <Typography
+                                                                variant="body2"
+                                                                sx={{
+                                                                    fontWeight: 600,
+                                                                    fontSize: '14px',
+                                                                    lineHeight: 1.3,
+                                                                    color: '#333',
+                                                                    mb: 0.5
+                                                                }}
+                                                            >
+                                                                {relatedBlog.title}
+                                                            </Typography>
+                                                            <Typography
+                                                                variant="caption"
+                                                                sx={{ color: 'text.secondary' }}
+                                                            >
+                                                                {relatedBlog.readTime} • {relatedBlog.category}
+                                                            </Typography>
+                                                        </Box>
+                                                    </Box>
+                                                </Link>
+                                            </Box>
+                                        ))}
+                                    </CardContent>
+                                </Card>
+                            )}
                         </Box>
                     </Grid>
                 </Grid>
             </StyledContainer>
+
+            {/* Bottom Navigation */}
+            <Box sx={{ bgcolor: 'rgba(0,84,171,0.05)', py: 4 }}>
+                <StyledContainer>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                        <Button
+                            variant="outlined"
+                            onClick={() => navigate('/blog')}
+                            sx={{
+                                borderColor: '#0054ab',
+                                color: '#0054ab',
+                                '&:hover': {
+                                    bgcolor: '#0054ab',
+                                    color: 'white'
+                                }
+                            }}
+                        >
+                            Tüm Blog Yazıları
+                        </Button>
+                        <Button
+                            variant="contained"
+                            onClick={handleShare}
+                            sx={{ bgcolor: '#0054ab' }}
+                        >
+                            Paylaş
+                        </Button>
+                    </Box>
+                </StyledContainer>
+            </Box>
         </Box>
     );
 }

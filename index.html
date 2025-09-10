@@ -1,13 +1,79 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/src/assets/images/ikon.png" />
+  <link rel="apple-touch-icon" href="/src/assets/images/ikon.png" />
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Meta Tags -->
+  <title>SpectraLoop - Samsun Üniversitesi Hyperloop Takımı</title>
+  <meta name="description" content="SpectraLoop, Samsun Üniversitesi Hyperloop takımıdır. Geleceğin ulaşım teknolojisi Hyperloop üzerine araştırma, geliştirme ve yarışmalar yapıyoruz. Teknofest Hyperloop yarışmasında başarılar elde eden öğrenci takımımıza katılın." />
+  <meta name="keywords" content="SpectraLoop, Hyperloop, Samsun Üniversitesi, Teknofest, ulaşım teknolojisi, öğrenci takımı, mühendislik, inovasyon" />
+  <meta name="author" content="SpectraLoop Hyperloop Takımı" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph Meta Tags (Sosyal medya paylaşımları için) -->
+  <meta property="og:title" content="SpectraLoop - Samsun Üniversitesi Hyperloop Takımı" />
+  <meta property="og:description" content="Geleceğin ulaşım teknolojisi Hyperloop üzerine araştırma ve geliştirme yapan öğrenci takımı. Teknofest yarışmalarında başarılar elde ediyoruz." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://spectraloop.com" />
+  <meta property="og:image" content="/logo.png" />
+  <meta property="og:site_name" content="SpectraLoop" />
+  <meta property="og:locale" content="tr_TR" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SpectraLoop - Samsun Üniversitesi Hyperloop Takımı" />
+  <meta name="twitter:description" content="Geleceğin ulaşım teknolojisi Hyperloop üzerine araştırma ve geliştirme yapan öğrenci takımı." />
+  <meta name="twitter:image" content="/logo.png" />
+
+  <!-- Theme Color (Mobil tarayıcılar için) -->
+  <meta name="theme-color" content="#0054ab" />
+  <meta name="msapplication-TileColor" content="#0054ab" />
+
+  <!-- Canonical URL (SEO için) -->
+  <link rel="canonical" href="https://spectraloop.com" />
+
+  <!-- Preconnect (Performans için) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SpectraLoop",
+      "description": "Samsun Üniversitesi Hyperloop Takımı",
+      "url": "https://spectraloop.com",
+      "logo": "https://spectraloop.com/logo.png",
+      "foundingDate": "2023",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Samsun Üniversitesi",
+        "addressLocality": "Samsun",
+        "addressCountry": "TR"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "General",
+        "email": "info@spectraloop.com"
+      },
+      "sameAs": [
+        "https://www.instagram.com/spectraloop_hyperloop/",
+        "https://www.linkedin.com/company/spectraloop",
+        "https://twitter.com/spectraloop"
+      ]
+    }
+  </script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.jsx"></script>
+</body>
 </html>

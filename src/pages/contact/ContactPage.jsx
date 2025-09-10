@@ -6,7 +6,7 @@ import ContactMapSection from "./components/ContactMapSection.jsx";
 import ContactWhatsappSection from "./components/ContactWhatsappSection.jsx";
 
 function ContactPage() {
-    document.title = "İletişim -  De Perlas Hotel"
+    document.title = "İletişim -  Spectraloop"
 
     return (
         <Box>
@@ -36,13 +36,7 @@ function ContactPage() {
                     </svg>
                 </div>
             </Box>
-            <RevealInViewAnimation
-                blur={true}
-                size={20}
-                transition={{delay: .2, duration: 0.5}}
-            >
-                <ContactFormSection/>
-            </RevealInViewAnimation>
+
             <ContactWhatsappSection/>
             <RevealInViewAnimation
                 blur={true}

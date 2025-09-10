@@ -6,13 +6,15 @@ import {StyledContainer} from "../../../components/styled/StyledComponents.jsx";
 import RevealInViewAnimation from "../../../animations/RevealInViewAnimation.jsx";
 import "../../../styles/components/outlined-button.css"
 import {StyledColoredButton} from "../../../components/styled/StyledButtons.jsx";
-import heroImage from "../../../assets/anasayfa.jpg" // Hero resminizi buraya ekleyin
+import heroImage from "../../../assets/anasayfa.jpg"
+import {useNavigate} from "react-router-dom"; // Hero resminizi buraya ekleyin
 
 function HomeHero({servicesRef}) {
     const [isImageLoaded, setIsImageLoaded] = useState(false)
     const {scrollY} = useScroll()
     const scale = useTransform(scrollY, [0, 500], [1, 0.9])
     const borderRadius = useTransform(scale, [1, 0.9], [0, 40])
+    const navigate = useNavigate();
 
     return (
         <Box sx={{position: "relative"}}>
@@ -112,10 +114,7 @@ function HomeHero({servicesRef}) {
                                                     backgroundColor: "#003d7a", // Koyu ton
                                                 }
                                             }}
-                                            onClick={() => servicesRef.current?.scrollIntoView({
-                                                behavior: 'smooth',
-                                                block: "center"
-                                            })}
+                                            onClick={() => navigate("/basvuru")}
                                         >
                                             <Typography sx={{
                                                 fontWeight: 500,
@@ -142,9 +141,9 @@ function HomeHero({servicesRef}) {
                                                     color: "#003d7a", // Koyu ton metin
                                                 },
                                             }}
-                                            href={"/iletisim"}
                                             target={"_blank"}
                                             rel={"noreferrer"}
+                                            onClick={() => navigate("/iletisim")}
                                         >
                                             <Typography
                                                 sx={{
