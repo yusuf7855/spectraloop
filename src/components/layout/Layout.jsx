@@ -8,8 +8,8 @@ import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import Footer from "../footer/Footer.jsx";
 import Sidebar from "../sidebar/Sidebar.jsx";
 import {Apartment, Engineering, Home, Phone, Article} from "@mui/icons-material";
-import logoLight from "../../assets/images/logo_white1.png"
-import logoDark from "../../assets/images/logo_black1.png"
+import logoLight from "../../assets/images/logo.png"
+import logoDark from "../../assets/images/logo.png"
 import ServicesMenu from "../navbar/ServicesMenu.jsx";
 import {services} from "../../utils/services.jsx"
 import WhatsAppFloatingButton from "../common/WhatsAppFloatingButton.jsx";
@@ -26,8 +26,8 @@ export default function Layout({children, freeLayout}) {
     const theme = createTheme({
         palette: {
             primary: {
-                main: "#005b8c",
-                secondary: "#015583",
+                main: "#0054ab", // Ana renginiz
+                secondary: "#003d7a", // Koyu ton
                 darkMain: "#000814",
                 dark: "rgb(40,40,40)"
             }
@@ -86,7 +86,7 @@ export default function Layout({children, freeLayout}) {
                 userDrag: "none",
                 userSelect: "none"
             }}
-            height={{xs: "30px", md: "65px"}}
+            height={{xs: "35px", md: "150px"}} // Daha da küçülttüm
             width={{xs: "auto", md: "auto"}} src={logoLight}/>,
         [])
 
@@ -99,7 +99,7 @@ export default function Layout({children, freeLayout}) {
                 userDrag: "none",
                 userSelect: "none"
             }}
-            height={{xs: "30px", md: "82px"}}
+            height={{xs: "35px", md: "150px"}} // Daha da küçülttüm
             width={{xs: "auto", md: "auto"}} src={logoDark}/>,
         [])
 
@@ -117,15 +117,15 @@ export default function Layout({children, freeLayout}) {
             route: "/",
         },
         {
-            title: "ODALAR",
-            sidebarTitle: "Odalar",
+            title: "PROJELERİMİZ",
+            sidebarTitle: "Projelerimiz",
             icon: <Engineering sx={iconStyle}/>,
             component: ServicesMenu,
             items: services
         },
         {
-            title: "KURUMSAL",
-            sidebarTitle: "Kurumsal",
+            title: "TAKIMIZ",
+            sidebarTitle: "Takımız",
             icon: <Apartment sx={iconStyle}/>,
             route: "/kurumsal",
         },
@@ -162,7 +162,7 @@ export default function Layout({children, freeLayout}) {
                                 navItems={navItems}
                         />
                         <Toolbar sx={{
-                            height: {xs: 64, md: 72, mlg: 31},
+                            height: {xs: 50, md: 60, mlg: 25}, // Toolbar yüksekliğini azalttım
                             minHeight: "0px!important",
                             display: isTransparent ? "none" : "block"
                         }}/>
@@ -172,7 +172,7 @@ export default function Layout({children, freeLayout}) {
                             <Outlet/>
                         </Box>
                         <Footer/>
-                        <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} navItems={navItems}/>
+                        <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} onOpen={toggleSidebar(true)} navItems={navItems}/>
                         {/* WhatsApp Floating Button - tüm sayfalarda görünecek */}
                         <WhatsAppFloatingButton />
                     </Box> : <Box>{children}</Box>

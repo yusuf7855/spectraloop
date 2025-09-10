@@ -1,6 +1,6 @@
 .outlined-button-colored {
     letter-spacing: 1px;
-    border: 2px solid #edb472 !important; /* Ana renk sınır */
+    border: 2px solid #0054ab !important; /* Ana renk sınır */
     color: white !important;
     line-height: 100%;
     position: relative;
@@ -12,7 +12,7 @@
 }
 
 .outlined-button-colored:before {
-    background-color: #edb472; /* Ana renk arka plan */
+    background-color: #0054ab; /* Ana renk arka plan */
     content: "";
     display: block;
     position: absolute;
@@ -42,9 +42,9 @@
 .outlined-button-colored:hover {
     color: white !important;
     transition: 0.5s;
-    box-shadow: 0 0 50px 0 rgba(199, 122, 99, .2); /* Ana rengin şeffaf hali */
-    border-color: #D4967D !important; /* Açık ton sınır (hover) */
-    background-color: #D4967D; /* Açık ton arka plan (hover) */
+    box-shadow: 0 0 50px 0 rgba(0, 84, 171, .2); /* Ana rengin şeffaf hali */
+    border-color: #003d7a !important; /* Koyu ton sınır (hover) */
+    background-color: #003d7a; /* Koyu ton arka plan (hover) */
 }
 
 .outlined-button-colored.hover:before {
@@ -54,5 +54,5 @@
 .outlined-button-colored.hover {
     color: white !important;
     transition: 0.5s;
-    box-shadow: 0 0 50px 0 rgba(199, 122, 99, .2); /* Ana rengin şeffaf hali */
+    box-shadow: 0 0 50px 0 rgba(0, 84, 171, .2); /* Ana rengin şeffaf hali */
 }

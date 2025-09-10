@@ -6,7 +6,8 @@ import {StyledContainer} from "../../../components/styled/StyledComponents.jsx";
 import RevealInViewAnimation from "../../../animations/RevealInViewAnimation.jsx";
 import "../../../styles/components/outlined-button.css"
 import {StyledColoredButton} from "../../../components/styled/StyledButtons.jsx";
-import videolanding from "../../../assets/videolanding.mp4"
+import heroImage from "../../../assets/anasayfa.jpg" // Hero resminizi buraya ekleyin
+
 function HomeHero({servicesRef}) {
     const [isImageLoaded, setIsImageLoaded] = useState(false)
     const {scrollY} = useScroll()
@@ -22,24 +23,19 @@ function HomeHero({servicesRef}) {
                     overflow: "hidden",
                 }}
             >
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                <img
+                    src={heroImage}
+                    alt="SpectraLoop Hyperloop Takımı"
                     style={{
-                        filter: "brightness(70%)",
+                        filter: "brightness(30%)",
                         objectFit: "cover",
-                        objectPosition: "50% 0%", // xs için
+                        objectPosition: "50% 50%",
                         width: "100%",
                         height: "100vh",
                         transition: "transform 0.3s ease",
                     }}
-                    onLoadedData={() => setIsImageLoaded(true)}
-                >
-                    <source src={videolanding} type="video/mp4"/>
-                    Your browser does not support the video tag.
-                </video>
+                    onLoad={() => setIsImageLoaded(true)}
+                />
             </motion.div>
 
             <Box sx={{
@@ -69,7 +65,7 @@ function HomeHero({servicesRef}) {
                                         background: "white",
                                         WebkitBackgroundClip: "text",
                                         WebkitTextFillColor: "transparent",
-                                    }}>ATAKUM SAHİLDEKİ EVİNİZ
+                                    }}>GELECEĞE DOĞRU HIZLA
                                     </Typography>
                                 </RevealInViewAnimation>
                                 <RevealInViewAnimation blur={true} size={20} transition={{duration: 0.6, delay: .6}}>
@@ -78,9 +74,9 @@ function HomeHero({servicesRef}) {
                                         fontWeight: 800,
                                         fontFamily: "'Montserrat', sans-serif",
                                         lineHeight: 1.25,
-                                        color: "#edb472" // edb472
+                                        color: "#0054ab" // Ana renginiz
                                     }}>
-                                        DE PERLAS!
+                                        SPECTRALOOP!
                                     </Typography>
                                 </RevealInViewAnimation>
                                 <RevealInViewAnimation blur={true} size={20} transition={{duration: 0.6, delay: .9}}>
@@ -92,8 +88,8 @@ function HomeHero({servicesRef}) {
                                         lineHeight: 2,
                                         maxWidth: "60ch"
                                     }}>
-                                        Perlas Otel olarak amacımız,
-                                        misafirlerimize evlerindeki huzuru ve konforu yaşatmak, her zaman güleryüzlü hizmet sunmaktır.
+                                        Teknofest Hyperloop yarışmasında Türkiye'nin geleceğini şekillendiren takımız.
+                                        Yenilikçi teknolojiler ve mühendislik çözümleriyle hyperloop sistemlerini geliştiriyoruz.
                                     </Typography>
                                 </RevealInViewAnimation>
                                 <Box sx={{
@@ -110,7 +106,11 @@ function HomeHero({servicesRef}) {
                                                 px: 8,
                                                 width: {xs: "100%", sm: "100%", md: "100%"},
                                                 borderRadius: 2,
-                                                border: "2px solid transparent"
+                                                border: "2px solid transparent",
+                                                backgroundColor: "#0054ab", // Ana renginiz
+                                                ":hover": {
+                                                    backgroundColor: "#003d7a", // Koyu ton
+                                                }
                                             }}
                                             onClick={() => servicesRef.current?.scrollIntoView({
                                                 behavior: 'smooth',
@@ -119,8 +119,9 @@ function HomeHero({servicesRef}) {
                                         >
                                             <Typography sx={{
                                                 fontWeight: 500,
-                                                textTransform: "none"
-                                            }}>Odalarımız</Typography>
+                                                textTransform: "none",
+                                                color: "white"
+                                            }}>Hemen Başvur</Typography>
                                         </StyledColoredButton>
                                     </RevealInViewAnimation>
                                     <RevealInViewAnimation blur={true} size={20} transition={{ duration: 0.6, delay: 1.5 }}>
@@ -133,12 +134,12 @@ function HomeHero({servicesRef}) {
                                                 borderRadius: 2,
                                                 overflow: "hidden",
                                                 width: { xs: "100%", sm: "100%", md: "auto" },
-                                                borderColor: "#edb472", // Ana renk sınır çizgisi
-                                                color: "#edb472", // Ana renk metin rengi
+                                                borderColor: "#0054ab", // Ana renginiz
+                                                color: "#0054ab", // Ana renginiz
                                                 ":hover": {
-                                                    backgroundColor: "#F5E6E0", // Açık ton arka plan (hover)
-                                                    borderColor: "#B86A52", // Koyu ton sınır çizgisi (hover)
-                                                    color: "#B86A52", // Koyu ton metin rengi (hover)
+                                                    backgroundColor: "rgba(0, 84, 171, 0.1)", // Açık ton arka plan
+                                                    borderColor: "#003d7a", // Koyu ton sınır
+                                                    color: "#003d7a", // Koyu ton metin
                                                 },
                                             }}
                                             href={"/iletisim"}

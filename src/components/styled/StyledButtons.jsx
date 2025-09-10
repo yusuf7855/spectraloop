@@ -6,15 +6,15 @@ export const StyledDarkButton = styled(Button)(({theme}) => ({
     borderRadius: "8px",
     overflow: "hidden",
     textAlign: "center",
-    backgroundImage: `linear-gradient(to right, rgb(40,40,40) 0%, #484848 51%, rgb(40,40,40) 100%)`,
+    backgroundImage: `linear-gradient(to right, #0054ab 0%, #0066cc 51%, #0054ab 100%)`,
     backgroundSize: "200% auto",
     color: "white",
-    boxShadow: "0px 0px 50px 10px rgba(0,0,0,0.1)",
+    boxShadow: "0px 0px 50px 10px rgba(0,84,171,0.1)",
     transition: ".3s all",
     ":hover": {
-        backgroundColor: "black",
+        backgroundColor: "#003d7a",
         color: "white",
-        boxShadow: "0px 0px 50px 10px rgba(255,255,255,0.1)",
+        boxShadow: "0px 0px 50px 10px rgba(0,84,171,0.2)",
         backgroundPosition: "right center"
     },
 }))
@@ -64,15 +64,15 @@ export const StyledColoredButton = styled(Button)(({theme}) => ({
     borderRadius: "400px",
     overflow: "hidden",
     textAlign: "center",
-    backgroundImage: `linear-gradient(to right, #edb472 10%, #D4967D 51%, #B86A52 100%)`,
+    backgroundImage: `linear-gradient(to right, #0054ab 10%, #0066cc 51%, #003d7a 100%)`,
     backgroundSize: "200% auto",
     color: "white",
-    boxShadow: "0px 0px 50px 10px rgba(0,0,0,0.1)",
+    boxShadow: "0px 0px 50px 10px rgba(0,84,171,0.1)",
     transition: ".3s all",
     ":hover": {
-        backgroundColor: "#D4967D",
+        backgroundColor: "#003d7a",
         color: "white",
-        boxShadow: "0px 0px 50px 10px rgba(199,122,99,0.2)",
+        boxShadow: "0px 0px 50px 10px rgba(0,84,171,0.3)",
         backgroundPosition: "right center"
     },
 }))
@@ -84,15 +84,15 @@ export const StyledWhatsAppButton = styled(Button)(({theme}) => ({
     borderRadius: "400px",
     overflow: "hidden",
     textAlign: "center",
-    backgroundImage: `linear-gradient(to right, #25D366 10%, #1aab4c 51%, #128C7E 100%)`,
+    backgroundImage: `linear-gradient(to right, #0054ab 10%, #0066cc 51%, #003d7a 100%)`,
     backgroundSize: "200% auto",
     color: "white",
-    boxShadow: "0px 0px 50px 10px rgba(0,0,0,0.1)",
+    boxShadow: "0px 0px 50px 10px rgba(0,84,171,0.1)",
     transition: ".3s all",
     ":hover": {
-        backgroundColor: "#1aab4c",
+        backgroundColor: "#003d7a",
         color: "white",
-        boxShadow: "0px 0px 50px 10px rgba(37,211,102,0.3)",
+        boxShadow: "0px 0px 50px 10px rgba(0,84,171,0.3)",
         backgroundPosition: "right center"
     },
 }));

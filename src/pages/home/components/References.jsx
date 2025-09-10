@@ -1,5 +1,5 @@
 import Marquee from "react-fast-marquee";
-import lynda from "../../../assets/images/logo_white1.png"
+import lynda from "../../../assets/images/logo.png"
 
 import {Box, Typography} from "@mui/material";
 import {StyledContainer} from "../../../components/styled/StyledComponents.jsx";

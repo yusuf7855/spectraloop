@@ -37,7 +37,14 @@ function NavBar({handleSidebar, logo, sidebarOpen, isTransparent, navItems, logo
             <StyledContainer sx={{
                 display: "flex", justifyContent: "space-between", alignItems: "center"
             }}>
-                <Box sx={{flex: 1, mr: "auto", py: {xs: 2, md: 2.5}, height: {xs: "62px", md: "92px"}}}>
+                <Box sx={{
+                    flex: 1,
+                    mr: "auto",
+                    py: {xs: 1, md: 1.5}, // Padding'i azalttım
+                    height: {xs: "50px", md: "60px"}, // Height'ı azalttım
+                    display: "flex",
+                    alignItems: "center"
+                }}>
                     {(scrolled || !isTransparent || sidebarOpen) ? logoDark : logo}
                 </Box>
                 <Box
@@ -48,7 +55,7 @@ function NavBar({handleSidebar, logo, sidebarOpen, isTransparent, navItems, logo
                     alignItems={"center"}
                     sx={{
                         flex: 1,
-                        height: "80px"
+                        height: "90px" // Height'ı azalttım
                     }}
                 >
                     <StyledSimpleBarItem
@@ -81,14 +88,18 @@ function NavBar({handleSidebar, logo, sidebarOpen, isTransparent, navItems, logo
                         ml: "auto",
                         display: { xs: "none", lg: "flex" },
                         justifyContent: "flex-end",
-                        py: { xs: 2, md: 2 },
+                        py: { xs: 1, md: 1.5 }, // Padding'i azalttım
                     }}
                 >
                     <StyledWhatsAppButton
                         sx={{
-                            py: 2,
-                            px: 5,
+                            py: 1.5, // Padding'i azalttım
+                            px: 4, // Padding'i azalttım
                             width: { xs: "80%", sm: "30%", md: "auto" },
+                            backgroundColor: "#0054ab", // Ana renginiz
+                            ":hover": {
+                                backgroundColor: "#003d7a", // Koyu ton
+                            }
                         }}
                         href="https://wa.me/905396385955"
                         target="_blank"
@@ -108,12 +119,18 @@ function NavBar({handleSidebar, logo, sidebarOpen, isTransparent, navItems, logo
     }
 
     return (<React.Fragment>
-        {(scrolled && isTransparent) ? <Slide in={true} timeout={300}>
-            {GetAppBar()}
-        </Slide> : GetAppBar()}
-    </React.Fragment>)
+        {(scrolled && isTransparent) ?
+            <Slide direction="down" in={scrolled} mountOnEnter unmountOnExit>
+                <div>
+                    {GetAppBar()}
+                </div>
+            </Slide> :
+            GetAppBar()
+        }
+    </React.Fragment>);
 }
 
+// StyledSimpleBarItem bileşenini ekliyorum
 const StyledSimpleBarItem = ({children, href, isTransparent, scrolled}) => {
     return <Box sx={{display: "flex", alignItems: "center", gap: 3, py: 0}}
                 onClick={() => {
@@ -127,11 +144,15 @@ const StyledSimpleBarItem = ({children, href, isTransparent, scrolled}) => {
             to={href.startsWith("#") ? "" : href}
             transparent={(isTransparent ? "transparent" : undefined)}
             sx={{
-                userDrag: "none", userSelect: "none", fontWeight: 500, fontSize: "1rem"
+                userDrag: "none",
+                userSelect: "none",
+                fontWeight: 500,
+                fontSize: "1rem",
+                color: (scrolled || !isTransparent) ? "black" : "white",
+                textDecoration: "none"
             }}
             scrolled={scrolled ? "scrolled" : undefined}>{children}</AppBarTypography>
     </Box>
 }
 
-export default NavBar
-
+export default NavBar;
